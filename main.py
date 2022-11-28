@@ -92,12 +92,13 @@ def run(args):
         if cv2.waitKey(10) == 27:
             break
 
-    cv2.imwrite("results/" + fname + '.png', img2)
+    if False: #supress this imwrite for now
+        cv2.imwrite("results/" + fname + '.png', img2)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='python_vo')
-    parser.add_argument('--config', type=str, default='params/kitti_superpoint_supergluematch.yaml',
+    parser.add_argument('--config', type=str, default='params/nm_phone.yaml',
                         help='config file')
     parser.add_argument('--logging', type=str, default='INFO',
                         help='logging level: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL')

@@ -4,12 +4,15 @@ import glob
 from tqdm import tqdm
 import logging
 
+from utils.PinholeCamera import PinholeCamera
+
+
 
 class SequenceImageLoader(object):
     default_config = {
-        "root_path": "/home/zxm/Pictures/Webcam",
+        "root_path": " /home/nitzan/Thesis/ThesisRepo/bag14/phone_vid/",
         "start": 0,
-        "format": "jpg"
+        "format": "png"
     }
 
     def __init__(self, config={}):
@@ -20,6 +23,8 @@ class SequenceImageLoader(object):
 
         self.img_id = self.config["start"]
         self.img_N = len(glob.glob(pathname=self.config["root_path"] + "/*." + self.config["format"]))
+        self.cam = PinholeCamera(640.0, 4801.0, 525, 525, 319.5, 239.5)
+
 
     def __getitem__(self, item):
         file_name = self.config["root_path"] + "/" + str(item) + "." + self.config["format"]
