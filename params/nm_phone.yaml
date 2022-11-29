@@ -1,8 +1,8 @@
 dataset:
   name:  SequenceImageLoader
-  root_path: /home/nitzan/Thesis/ThesisRepo/bag14/phone_vid/phoneframe
+  root_path: /home/nitzan/Thesis/ThesisRepo/bag14/phone_vid
 #  root_path: test_imgs
-  sequence: '000'
+  sequence: /phoneframe
   start: 0
 
 detector:
