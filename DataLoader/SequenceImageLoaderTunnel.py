@@ -7,14 +7,20 @@ import logging
 from utils.PinholeCamera import PinholeCamera
 
 
-
+CamNum = 1
 class SequenceImageLoaderTunnel(object):
-    default_config = {
-        "root_path": " /home/nitzan/Thesis/ThesisRepo/bag14/cam2/ImgsValidClean/",
-        "start": 0,
-        "format": "png"
-    }
-
+    if CamNum==1:
+        default_config = {
+            "root_path": " /home/nitzan/Thesis/ThesisRepo/bag14/cam1/ImgsValidClean/",
+            "start": 0,
+            "format": "png"
+        }
+    else:
+        default_config = {
+            "root_path": " /home/nitzan/Thesis/ThesisRepo/bag14/cam2/ImgsValidClean/",
+            "start": 0,
+            "format": "png"
+        } 
     def __init__(self, config={}):
         self.config = self.default_config
         self.config = {**self.config, **config}
@@ -25,9 +31,11 @@ class SequenceImageLoaderTunnel(object):
         self.img_N = len(glob.glob(pathname=self.config["root_path"] + "/*." + self.config["format"]))
         self.img_N = self.img_N + 2000 #just because the ordering is messed up
         #for cam 1 (lower)
-        # self.cam = PinholeCamera(1280.0, 720.0, 1014.8030544556, 1013.7896293084, 627.2438643441, 429.880932612)
+        if CamNum==1:
+            self.cam = PinholeCamera(1280.0, 720.0, 1014.8030544556, 1013.7896293084, 627.2438643441, 429.880932612)
+        else:
         #for cam 2 (upper)
-        self.cam = PinholeCamera(1280.0, 720.0, 1579.6093592162, 1567.4325689515, 643.7388676583, 294.5986817384)
+            self.cam = PinholeCamera(1280.0, 720.0, 1579.6093592162, 1567.4325689515, 643.7388676583, 294.5986817384)
 
 
     def __getitem__(self, item):

@@ -82,7 +82,8 @@ def run(args):
         if img is None:
             continue
         # R, t = vo.update(img, absscale.update(gt_pose)) #nm debug - setting scale to 1
-        R, t = vo.update(img)
+        sf = 2 #scale factor -  just a lie
+        R, t = vo.update(img,sf)
 
         # === log writer ==============================
         print(i, t[0, 0], t[1, 0], t[2, 0], gt_pose[0, 3], gt_pose[1, 3], gt_pose[2, 3], file=log_fopen)
@@ -102,7 +103,7 @@ def run(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='python_vo')
-    parser.add_argument('--config', type=str, default='params/cam2_sp_sg.yaml', #'params/phone_sp_sg.yaml'
+    parser.add_argument('--config', type=str, default='params/cam1_sp_sg.yaml', #'params/phone_sp_sg.yaml'
                         help='config file')
     parser.add_argument('--logging', type=str, default='INFO',
                         help='logging level: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL')
