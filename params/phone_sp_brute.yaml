@@ -1,0 +1,23 @@
+dataset:
+  name:  SequenceImageLoader
+  root_path: /home/nitzan/Thesis/ThesisRepo/bag14/phone_vid/
+#  root_path: test_imgs
+  sequence:
+  start: 0
+
+detector:
+  name: SuperPointDetector
+  descriptor_dim: 256
+  nms_radius: 4
+  keypoint_threshold: 0.005
+  max_keypoints: -1
+  remove_borders: 4
+  cuda: 0
+
+matcher:
+  name: FrameByFrameMatcher
+  type: KNN
+  KNN:
+    HAMMING: False  # For ORB Binary descriptor, only can use hamming matching
+    first_N: 300 # For hamming matching, use first N min matches
+  distance_ratio: 0.75

@@ -77,8 +77,12 @@ def run(args):
 
     vo = VisualOdometry(detector, matcher, loader.cam)
     for i, img in enumerate(loader):
-        gt_pose = loader.get_cur_pose()
-        R, t = vo.update(img, absscale.update(gt_pose))
+        # gt_pose = loader.get_cur_pose() #nm debug - romove ground truth
+        gt_pose = np.eye(4) #nm debug - remove ground truth
+        if img is None:
+            continue
+        # R, t = vo.update(img, absscale.update(gt_pose)) #nm debug - setting scale to 1
+        R, t = vo.update(img)
 
         # === log writer ==============================
         print(i, t[0, 0], t[1, 0], t[2, 0], gt_pose[0, 3], gt_pose[1, 3], gt_pose[2, 3], file=log_fopen)
@@ -92,13 +96,13 @@ def run(args):
         if cv2.waitKey(10) == 27:
             break
 
-    if False: #supress this imwrite for now
+    # if False: #supress this imwrite for now
         cv2.imwrite("results/" + fname + '.png', img2)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='python_vo')
-    parser.add_argument('--config', type=str, default='params/nm_phone.yaml',
+    parser.add_argument('--config', type=str, default='params/cam2_sp_sg.yaml', #'params/phone_sp_sg.yaml'
                         help='config file')
     parser.add_argument('--logging', type=str, default='INFO',
                         help='logging level: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL')
